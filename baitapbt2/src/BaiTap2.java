@@ -5,7 +5,7 @@ import java.nio.file.Files;
 import java.util.*;
 
 
-public class BaiTap1 {
+public class BaiTap2 {
 
     public static void main(String[] args) {
         StringBuilder sb = new StringBuilder();
