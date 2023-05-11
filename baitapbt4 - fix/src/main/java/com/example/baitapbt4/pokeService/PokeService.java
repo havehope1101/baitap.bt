@@ -4,6 +4,8 @@ import com.example.baitapbt4.entity.PokeEntity;
 import com.example.baitapbt4.pokeRepository.*;
 import com.example.baitapbt4.constant.Constant;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -30,13 +32,21 @@ public class PokeService {
         return pokeRepository.findPokeEntitiesByGeneration(gen);
     }
 
-    public List<PokeEntity> findByTotal(Double Total) {
+    public List<PokeEntity> lessthan(Double Total) {
         return pokeRepository.findByTotalLessThan(Total);
     }
 
-//    public Iterable<PokeEntity> pageSortPokemon() {
-//        return pokeRepository.findPokeEntity(Pageable.unpaged());
-//    }
+    public List<PokeEntity> greaterthan(Double Total) {
+        return pokeRepository.findByTotalGreaterThan(Total);
+    }
+
+    public Iterable<PokeEntity> pageSortPokemon(Integer page) {
+        return pokeRepository.findAllBy(PageRequest.of(page,5));
+    }
+
+    public Iterable<PokeEntity> findPokeBy(Integer page) {
+        return pokeRepository.findPokeEntityByAttackAndDefenseAndSpAtkAndSpDefaAndHPAndTotal(PageRequest.of(page,5));
+    }
 
 
 }

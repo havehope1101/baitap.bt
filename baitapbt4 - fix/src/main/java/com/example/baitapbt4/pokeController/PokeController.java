@@ -18,12 +18,8 @@ public class PokeController {
     @Autowired
     private PokeService pokeService;
 
-    @GetMapping("/")
-    public String homepage() {
-        return "haha";
-    }
 
-    @GetMapping("/pokemon/{id}")
+    @GetMapping("/poke/{id}")
     public PokeEntity findById(@PathVariable String id) {
         return pokeService.findById(id);
     }
@@ -33,18 +29,28 @@ public class PokeController {
         return pokeService.findAll();
     }
 
-    @GetMapping("/searchbyname")
+    @GetMapping("/pokename")
     public ResponseEntity<PokeEntity> searchPokemon(@RequestParam("name") String name) {
         return ResponseEntity.ok(pokeService.findByName(name));
     }
 
-//    @GetMapping("/searchbygen")
-//    public Iterable<PokeEntity> findByGen(@RequestParam String gen) {
-//        return pokeService.findByGen(gen);
-//    }
+    @GetMapping("/pokebygen")
+    public Iterable<PokeEntity> findByGen(@RequestParam String gen) {
+        return pokeService.findByGen(gen);
+    }
 
-    @GetMapping("/lessthan")
+    @GetMapping("/pokelessthan")
     public ResponseEntity<List<PokeEntity>> getPokeTotalLessThan (@RequestParam("total") Double Total) {
-        return new ResponseEntity<List<PokeEntity>>(pokeService.findByTotal(Total),HttpStatus.OK);
+        return new ResponseEntity<List<PokeEntity>>(pokeService.lessthan(Total),HttpStatus.OK);
+    }
+
+    @GetMapping("/pokegreaterthan")
+    public ResponseEntity<List<PokeEntity>> getPokeTotalGreaterThan (@RequestParam("total") Double Total) {
+        return new ResponseEntity<List<PokeEntity>>(pokeService.greaterthan(Total),HttpStatus.OK);
+    }
+
+    @GetMapping("pokepage/{page}")
+    public Iterable<PokeEntity> findPokemonWithPageSort (@PathVariable Integer page ) {
+        return pokeService.pageSortPokemon(page);
     }
 }
